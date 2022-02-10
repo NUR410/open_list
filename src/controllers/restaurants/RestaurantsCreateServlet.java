@@ -43,16 +43,24 @@ public class RestaurantsCreateServlet extends HttpServlet {
             Restaurant r = new Restaurant();
 
             r.setUser((User)request.getSession().getAttribute("login_user"));
-
             r.setName(request.getParameter("name"));
-            r.setOpen_time(request.getParameter("open_time"));
-            r.setClose_time(request.getParameter("close_time"));
 
-            String cd[] = request.getParameterValues("closed_day");
-            String closed_day = String.join(",", cd);
-            System.out.println(closed_day);
-            r.setClosed_day(closed_day);
+            String ot = request.getParameter("open_time").replace(":", "");
+            String ct = request.getParameter("close_time").replace(":", "");
+            int open_time = Integer.parseInt(ot);
+            int close_time = Integer.parseInt(ct);
+            r.setClose_time(close_time);
+            r.setOpen_time(open_time);
 
+            if(request.getParameterValues("closed_day") != null){
+                String closed_day = String.join(",", request.getParameterValues("closed_day"));
+                r.setClosed_day(closed_day);
+            }else{
+                String closed_day = "無休";
+                r.setClosed_day(closed_day);
+            }
+
+            r.setOpen(0);
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);
             r.setUpdated_at(currentTime);

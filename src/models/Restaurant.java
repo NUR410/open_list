@@ -30,7 +30,7 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "getMyRestaurantsCount",
             query = "SELECT COUNT(r) FROM Restaurant AS r WHERE r.user = :user"
-        )
+    )
 })
 @Entity
 public class Restaurant {
@@ -47,10 +47,10 @@ public class Restaurant {
     private String name;
 
     @Column(name = "open_time")
-    private String open_time;
+    private int open_time;
 
     @Column(name = "close_time")
-    private String close_time;
+    private int close_time;
 
     @Column(name = "closed_day")
     private String closed_day;
@@ -60,6 +60,9 @@ public class Restaurant {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
+
+    @Column(name = "open")
+    private int open;
 
     public Integer getId() {
         return id;
@@ -85,19 +88,19 @@ public class Restaurant {
         this.name = name;
     }
 
-    public String getOpen_time() {
+    public int getOpen_time() {
         return open_time;
     }
 
-    public void setOpen_time(String open_time) {
+    public void setOpen_time(int open_time) {
         this.open_time = open_time;
     }
 
-    public String getClose_time() {
+    public int getClose_time() {
         return close_time;
     }
 
-    public void setClose_time(String close_time) {
+    public void setClose_time(int close_time) {
         this.close_time = close_time;
     }
 
@@ -123,5 +126,13 @@ public class Restaurant {
 
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public int getOpen() {
+        return open;
+    }
+
+    public void setOpen(int open) {
+        this.open = open;
     }
 }

@@ -41,13 +41,23 @@ public class RestaurantsUpdateServlet extends HttpServlet {
             Restaurant r = em.find(Restaurant.class, (Integer)(request.getSession().getAttribute("restaurant_id")));
 
             r.setName(request.getParameter("name"));
-            r.setOpen_time(request.getParameter("open_time"));
-            r.setClose_time(request.getParameter("close_time"));
 
-            String cd[] = request.getParameterValues("closed_day");
-            String closed_day = String.join(",", cd);
-            r.setClosed_day(closed_day);
+            String ot = request.getParameter("open_time").replace(":", "");
+            String ct = request.getParameter("close_time").replace(":", "");
+            int open_time = Integer.parseInt(ot);
+            int close_time = Integer.parseInt(ct);
+            r.setClose_time(close_time);
+            r.setOpen_time(open_time);
 
+            if(request.getParameterValues("closed_day") != null){
+                String closed_day = String.join(",", request.getParameterValues("closed_day"));
+                r.setClosed_day(closed_day);
+            }else{
+                String closed_day = "無休";
+                r.setClosed_day(closed_day);
+            }
+
+            r.setOpen(0);
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
             List<String> errors = RestaurantValidator.validate(r);

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
         <c:choose>
@@ -20,7 +21,9 @@
                         <tr>
                             <th>営業時間</th>
                             <td>
-                                <c:out value="${restaurant.open_time}" /> 〜 <c:out value="${restaurant.close_time}" />
+                                <fmt:formatNumber var="open" value="${restaurant.open_time}" pattern="#0,00" />
+                                <fmt:formatNumber var="close" value="${restaurant.close_time}" pattern="#0,00" />
+                                <c:out value="${fn:replace(open, ',', ':')}" /> 〜 <c:out value="${fn:replace(close, ',', ':')}" />
                             </td>
                         </tr>
                         <tr>
