@@ -37,11 +37,12 @@ public class UsersDestroyServlet extends HttpServlet {
             // セッションスコープからユーザーのIDを取得して
             // 該当のIDのユーザー１件のみをデータベースから取得
             User u = em.find(User.class, (Integer)(request.getSession().getAttribute("user_id")));
+            u.setDelete_flag(1);
 
             em.getTransaction().begin();
-            em.remove(u);       // データ削除
             em.getTransaction().commit();
             em.close();
+            request.getSession().setAttribute("flush", "削除が完了しました。");
 
             // セッションスコープ上の不要になったデータを削除
             request.getSession().removeAttribute("user_id");

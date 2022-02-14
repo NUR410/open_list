@@ -4,7 +4,7 @@
 <c:import url="/WEB-INF/views/layout/app.jsp">
     <c:param name="content">
         <c:choose>
-            <c:when test="${user != null}">
+            <c:when test="${user != null && user.delete_flag == 0}">
                 <h3>${user.name} さんのユーザー情報　詳細ページ</h3>
 
                 <table>

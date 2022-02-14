@@ -13,11 +13,11 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(
         name = "getAllUsers",
-        query = "SELECT u FROM User AS u ORDER BY u.id DESC"
+        query = "SELECT u FROM User AS u WHERE u.delete_flag = 0 ORDER BY u.id DESC"
     ),
     @NamedQuery(
         name = "getUsersCount",
-        query = "SELECT COUNT(u) FROM User AS u"
+        query = "SELECT COUNT(u) FROM User AS u WHERE u.delete_flag = 0"
     ),
     @NamedQuery(
         name = "checkRegisteredName",
@@ -25,7 +25,7 @@ import javax.persistence.Table;
     ),
     @NamedQuery(
             name = "checkLoginNameAndPassword",
-            query = "SELECT u FROM User AS u WHERE u.name = :name AND u.password = :pass"
+            query = "SELECT u FROM User AS u WHERE u.delete_flag = 0 AND u.name = :name AND u.password = :pass"
         )
 })
 @Entity
@@ -41,6 +41,8 @@ public class User {
     @Column(name = "password", length = 64, nullable = false)
     private String password;
 
+    @Column(name= "delete_flag", nullable = false)
+    private Integer delete_flag;
 
     public Integer getId(){
         return id;
@@ -64,5 +66,13 @@ public class User {
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public Integer getDelete_flag() {
+        return delete_flag;
+    }
+
+    public void setDelete_flag(Integer delete_flag) {
+        this.delete_flag = delete_flag;
     }
  }

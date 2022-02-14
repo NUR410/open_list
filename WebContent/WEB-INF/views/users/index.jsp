@@ -16,13 +16,15 @@
                     <th>操作</th>
                 </tr>
                 <c:forEach var="user" items="${users}" varStatus="status">
-                    <tr class="row${status.count % 2}">
-                        <td><c:out value="${user.id}" /></td>
-                        <td><c:out value="${user.name}" /></td>
-                        <td>
-                            <a href="<c:url value='/users/show?id=${user.id}' />">詳細を表示</a>
-                        </td>
-                    </tr>
+                    <c:if test="${user.delete_flag == 0}">
+                        <tr class="row${status.count % 2}">
+                            <td><c:out value="${user.id}" /></td>
+                            <td><c:out value="${user.name}" /></td>
+                            <td>
+                                <a href="<c:url value='/users/show?id=${user.id}' />">詳細を表示</a>
+                            </td>
+                        </tr>
+                    </c:if>
                 </c:forEach>
             </tbody>
         </table>
