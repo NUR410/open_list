@@ -34,8 +34,8 @@ public class UsersDestroyServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            // セッションスコープからメッセージのIDを取得して
-            // 該当のIDのメッセージ1件のみをデータベースから取得
+            // セッションスコープからユーザーのIDを取得して
+            // 該当のIDのユーザー１件のみをデータベースから取得
             User u = em.find(User.class, (Integer)(request.getSession().getAttribute("user_id")));
 
             em.getTransaction().begin();
@@ -46,8 +46,8 @@ public class UsersDestroyServlet extends HttpServlet {
             // セッションスコープ上の不要になったデータを削除
             request.getSession().removeAttribute("user_id");
 
-            // indexページへリダイレクト
-            response.sendRedirect(request.getContextPath() + "/users/index");
+            // logoutへリダイレクト
+            response.sendRedirect(request.getContextPath() + "/logout");
         }
     }
 }

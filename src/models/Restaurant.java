@@ -41,7 +41,7 @@ import javax.persistence.Table;
                     //開店時間＜現時刻 かつ 現時刻＜閉店時間 のとき
                     + "AND (r.open_time < :ct) AND (:ct < r.close_time))"
                     // また、開店時間＞閉店時間の場合
-                    + "OR ((r.open_time > r.close_time) "
+                    + "OR ((r.open_time >= r.close_time) "
                     //今日が営業日で、開店時間＜現時刻
                     + "AND (((r.closed_day NOT LIKE :today) AND (r.open_time < :ct))"
                     // また、昨日が営業日の場合で 現時刻＜閉店時間 のとき
@@ -54,7 +54,7 @@ import javax.persistence.Table;
                     + "(((r.open_time < r.close_time) "
                     + "AND (r.closed_day NOT LIKE :today) "
                     + "AND (r.open_time < :ct) AND (:ct < r.close_time))"
-                    + "OR ((r.open_time > r.close_time) "
+                    + "OR ((r.open_time >= r.close_time) "
                     + "AND (((r.closed_day NOT LIKE :today) AND (r.open_time < :ct))"
                     + "OR ((r.closed_day NOT LIKE :day_before) AND (:ct < r.close_time))))) "
                     + "ORDER BY r.close_time ASC"
@@ -67,7 +67,7 @@ import javax.persistence.Table;
                     //現時刻＜開店時間、閉店時間＜現時刻、今日が休業日
                     + "AND ((:ct < r.open_time) OR (r.close_time < :ct) OR (r.closed_day LIKE :today)))"
                     //開店時間＞閉店時間の場合は
-                    + "OR ((r.open_time > r.close_time) "
+                    + "OR ((r.open_time >= r.close_time) "
                     //開店時間＜現時刻、かつ現時刻＜閉店時間の時、または
                     + "AND (((r.close_time < :ct) AND (:ct < r.open_time)) "
                     //今日が休業日で閉店時間＜現時刻

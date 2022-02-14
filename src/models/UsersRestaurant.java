@@ -22,12 +22,12 @@ import javax.persistence.Table;
             query = "SELECT COUNT(ur) FROM UsersRestaurant AS ur WHERE ur.user = :user"
     ),
     @NamedQuery(
-            name = "getUsersRestaurantsCount",
-            query = "SELECT COUNT(ur) FROM UsersRestaurant AS ur WHERE ur.user = :user and ur.restaurant = :rest"
+            name = "getUsersRestaurants",
+            query = "SELECT ur FROM UsersRestaurant AS ur WHERE ur.restaurant = :rest"
     ),
     @NamedQuery(
-            name = "getUsersRestaurants",
-            query = "SELECT ur FROM UsersRestaurant AS ur WHERE ur.user = :user and ur.restaurant = :rest"
+            name = "getUsersRestaurantsCount",
+            query = "SELECT COUNT(ur) FROM UsersRestaurant AS ur WHERE ur.user = :user and ur.restaurant = :rest"
     ),
     @NamedQuery(
             name = "getOpenUsersRestaurants",
@@ -39,7 +39,7 @@ import javax.persistence.Table;
                     //開店時間＜現時刻 かつ 現時刻＜閉店時間 のとき
                     + "AND (ur.restaurant.open_time < :ct) AND (:ct < ur.restaurant.close_time))"
                     // また、開店時間＞閉店時間の場合
-                    + "OR ((ur.restaurant.open_time > ur.restaurant.close_time) "
+                    + "OR ((ur.restaurant.open_time >= ur.restaurant.close_time) "
                     //今日が営業日で、開店時間＜現時刻
                     + "AND (((ur.restaurant.closed_day NOT LIKE :today) AND (ur.restaurant.open_time < :ct))"
                     // また、昨日が営業日の場合で 現時刻＜閉店時間 のとき
@@ -49,13 +49,13 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "getOpenUsersRestaurantsCount",
             query = "SELECT COUNT(ur) FROM UsersRestaurant AS ur WHERE (ur.user = :user) "
-            + "AND (((ur.restaurant.open_time < ur.restaurant.close_time) "
-            + "AND (ur.restaurant.closed_day NOT LIKE :today) "
-            + "AND (ur.restaurant.open_time < :ct) AND (:ct < ur.restaurant.close_time))"
-            + "OR ((ur.restaurant.open_time > ur.restaurant.close_time) "
-            + "AND (((ur.restaurant.closed_day NOT LIKE :today) AND (ur.restaurant.open_time < :ct))"
-            + "OR ((ur.restaurant.closed_day NOT LIKE :day_before) AND (:ct < ur.restaurant.close_time))))) "
-            + "ORDER BY ur.restaurant.close_time ASC"
+                    + "AND (((ur.restaurant.open_time < ur.restaurant.close_time) "
+                    + "AND (ur.restaurant.closed_day NOT LIKE :today) "
+                    + "AND (ur.restaurant.open_time < :ct) AND (:ct < ur.restaurant.close_time))"
+                    + "OR ((ur.restaurant.open_time >= ur.restaurant.close_time) "
+                    + "AND (((ur.restaurant.closed_day NOT LIKE :today) AND (ur.restaurant.open_time < :ct))"
+                    + "OR ((ur.restaurant.closed_day NOT LIKE :day_before) AND (:ct < ur.restaurant.close_time))))) "
+                    + "ORDER BY ur.restaurant.close_time ASC"
     ),
     @NamedQuery(
             name = "getCloseUsersRestaurants",
@@ -65,7 +65,7 @@ import javax.persistence.Table;
                     //現時刻＜開店時間、閉店時間＜現時刻、今日が休業日
                     + "AND ((:ct < ur.restaurant.open_time) OR (ur.restaurant.close_time < :ct) OR (ur.restaurant.closed_day LIKE :today)))"
                     //開店時間＞閉店時間の場合は
-                    + "OR ((ur.restaurant.open_time > ur.restaurant.close_time) "
+                    + "OR ((ur.restaurant.open_time >= ur.restaurant.close_time) "
                     //開店時間＜現時刻、かつ現時刻＜閉店時間の時、または
                     + "AND (((ur.restaurant.close_time < :ct) AND (:ct < ur.restaurant.open_time)) "
                     //今日が休業日で閉店時間＜現時刻
