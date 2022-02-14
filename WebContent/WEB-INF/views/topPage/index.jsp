@@ -10,11 +10,20 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>ようこそ</h2>
+        <c:choose>
+            <c:when test="${sessionScope.login_user != null}">
+               <h3>投稿やお気に入りをした店舗の営業状態が確認できます。</h3>
+            </c:when>
+            <c:otherwise>
+                <h3>ログインしていないので登録されている全店舗の営業状態が表示されます。<br />
+                ログインすると投稿やお気に入りをした店舗の営業状態が確認できます。</h3>
+            </c:otherwise>
+        </c:choose>
+        <br />
         <fmt:formatNumber var="ct" value="${current_time}" pattern="#0,00" />
         <h3>${today_date} (${today_week}曜日) ${fn:replace(ct, ',', ':')}</h3>
         <h3>登録店 ${restaurants_count} 件中 ${open_restaurants_count} 件営業中です<br /></h3>
-        <h3>【お気に入り店舗　一覧】</h3>
+        <h3>【登録店舗　営業時間一覧】</h3>
         <table id="restaurant_list">
             <tbody>
                 <tr>
@@ -60,6 +69,8 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='/restaurants/new' />">新規店舗の登録</a></p>
+        <c:if test="${sessionScope.login_user != null}">
+           <p><a href="<c:url value='/restaurants/new' />">新規店舗の登録</a></p>
+        </c:if>
     </c:param>
 </c:import>

@@ -47,18 +47,20 @@
                     </tbody>
                 </table>
 
-                <c:choose>
-                    <c:when test="${favorite == true}">
-                        <form method="POST" action="<c:url value='/usersrestaurants/destroy?id=${restaurant.id}' />">
-                            <button type="submit">お気に入り解除</button>
-                        </form>
-                    </c:when>
-                    <c:otherwise>
-                        <form method="POST" action="<c:url value='/usersrestaurants/create?id=${restaurant.id}' />">
-                            <button type="submit">お気に入り</button>
-                        </form>
-                    </c:otherwise>
-                </c:choose>
+                <c:if test="${sessionScope.login_user != null}">
+                    <c:choose>
+                        <c:when test="${favorite == true}">
+                            <form method="POST" action="<c:url value='/usersrestaurants/destroy?id=${restaurant.id}' />">
+                                <button type="submit">お気に入り解除</button>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <form method="POST" action="<c:url value='/usersrestaurants/create?id=${restaurant.id}' />">
+                                <button type="submit">お気に入り</button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
+                </c:if>
 
                 <c:if test="${sessionScope.login_user.id == restaurant.user.id}">
                     <p><a href="<c:url value="/restaurants/edit?id=${restaurant.id}" />">この店舗を編集する</a></p>

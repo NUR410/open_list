@@ -56,49 +56,89 @@ public class TopPageIndexServlet extends HttpServlet {
         String today = week_name[current.getDayOfWeek().getValue()];
         String day_before = week_name[current.getDayOfWeek().getValue() - 1];
 
+        List<Restaurant> open_restaurants = new ArrayList<>();
+        long restaurants_count = 0;
+        long open_restaurants_count = 0;
+        //ログイン時
+        if(login_user != null){
+            restaurants_count = (long)em.createNamedQuery("getMyUsersRestaurantsCount", Long.class)
+                    .setParameter("user", login_user)
+                    .getSingleResult();
 
-        long users_restaurants_count = (long)em.createNamedQuery("getMyUsersRestaurantsCount", Long.class)
-                .setParameter("user", login_user)
-                .getSingleResult();
-
-        long open_restaurants_count = (long)em.createNamedQuery("getOpenRestaurantsCount", Long.class)
-                .setParameter("user", login_user)
-                .setParameter("ct", ct)
-                .setParameter("today", "%"+today+"%")
-                .setParameter("day_before", "%"+day_before+"%")
-                .getSingleResult();
-
-        List<UsersRestaurant> users_restaurants = em.createNamedQuery("getOpenRestaurants", UsersRestaurant.class)
-                .setParameter("user", login_user)
-                .setParameter("ct", ct)
-                .setParameter("today", "%"+today+"%")
-                .setParameter("day_before", "%"+day_before+"%")
-                .setFirstResult(15 * (page - 1))
-                .setMaxResults(15)
-                .getResultList();
-
-        int open_page = (int)open_restaurants_count /15;
-        int open_fraction = (int)open_restaurants_count %15;
-        int size = users_restaurants.size();
-        if(size < 15){
-            List<UsersRestaurant> close_restaurants = em.createNamedQuery("getCloseRestaurants", UsersRestaurant.class)
+            open_restaurants_count = (long)em.createNamedQuery("getOpenUsersRestaurantsCount", Long.class)
                     .setParameter("user", login_user)
                     .setParameter("ct", ct)
                     .setParameter("today", "%"+today+"%")
                     .setParameter("day_before", "%"+day_before+"%")
-                    .setFirstResult(15 * (page - open_page -2) + (15 - open_fraction))
-                    .setMaxResults(15 - size)
+                    .getSingleResult();
+
+            List<UsersRestaurant> users_restaurants = em.createNamedQuery("getOpenUsersRestaurants", UsersRestaurant.class)
+                    .setParameter("user", login_user)
+                    .setParameter("ct", ct)
+                    .setParameter("today", "%"+today+"%")
+                    .setParameter("day_before", "%"+day_before+"%")
+                    .setFirstResult(15 * (page - 1))
+                    .setMaxResults(15)
                     .getResultList();
 
-            users_restaurants.addAll(close_restaurants);
+            int open_page = (int)open_restaurants_count /15;
+            int open_fraction = (int)open_restaurants_count %15;
+            int size = users_restaurants.size();
+            if(size < 15){
+                List<UsersRestaurant> close_restaurants = em.createNamedQuery("getCloseUsersRestaurants", UsersRestaurant.class)
+                        .setParameter("user", login_user)
+                        .setParameter("ct", ct)
+                        .setParameter("today", "%"+today+"%")
+                        .setParameter("day_before", "%"+day_before+"%")
+                        .setFirstResult(15 * (page - open_page -2) + (15 - open_fraction))
+                        .setMaxResults(15 - size)
+                        .getResultList();
+
+                users_restaurants.addAll(close_restaurants);
+                }
+            for(UsersRestaurant ur : users_restaurants){
+                open_restaurants.add(ur.getRestaurant());
+
+            }
+        //非ログイン時
+        }else{
+            restaurants_count = (long)em.createNamedQuery("getRestaurantsCount", Long.class)
+                    .getSingleResult();
+
+            open_restaurants_count = (long)em.createNamedQuery("getOpenRestaurantsCount", Long.class)
+                    .setParameter("ct", ct)
+                    .setParameter("today", "%"+today+"%")
+                    .setParameter("day_before", "%"+day_before+"%")
+                    .getSingleResult();
+
+            open_restaurants = em.createNamedQuery("getOpenRestaurants", Restaurant.class)
+                    .setParameter("ct", ct)
+                    .setParameter("today", "%"+today+"%")
+                    .setParameter("day_before", "%"+day_before+"%")
+                    .setFirstResult(15 * (page - 1))
+                    .setMaxResults(15)
+                    .getResultList();
+
+            int open_page = (int)open_restaurants_count /15;
+            int open_fraction = (int)open_restaurants_count %15;
+            int size = open_restaurants.size();
+            if(size < 15){
+                List<Restaurant> close_restaurants = em.createNamedQuery("getCloseRestaurants", Restaurant.class)
+                        .setParameter("ct", ct)
+                        .setParameter("today", "%"+today+"%")
+                        .setParameter("day_before", "%"+day_before+"%")
+                        .setFirstResult(15 * (page - open_page -2) + (15 - open_fraction))
+                        .setMaxResults(15 - size)
+                        .getResultList();
+
+                open_restaurants.addAll(close_restaurants);
+            }
         }
 
 
         em.close();
 
-        List<Restaurant> open_restaurants = new ArrayList<Restaurant>();
-        for(UsersRestaurant ur : users_restaurants){
-            Restaurant r = ur.getRestaurant();
+        for(Restaurant r : open_restaurants){
             int open_time = r.getOpen_time();
             int close_time = r.getClose_time();
             if(open_time < close_time){
@@ -116,7 +156,6 @@ public class TopPageIndexServlet extends HttpServlet {
                     r.setOpen(0);
                 }
             }
-            open_restaurants.add(r);
         }
 
         request.setAttribute("today_date", today_date);
@@ -125,7 +164,7 @@ public class TopPageIndexServlet extends HttpServlet {
         request.setAttribute("usersrestaurants", open_restaurants);
         request.setAttribute("size", open_restaurants.size());
         request.setAttribute("page", page);
-        request.setAttribute("restaurants_count", users_restaurants_count);
+        request.setAttribute("restaurants_count", restaurants_count);
         request.setAttribute("open_restaurants_count", open_restaurants_count);
         request.setAttribute("page", page);
 

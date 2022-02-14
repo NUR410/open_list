@@ -49,6 +49,7 @@ public class UsersIndexServlet extends HttpServlet {
         em.close();
 
         request.setAttribute("users", users);
+        request.setAttribute("size", users.size());
         request.setAttribute("users_count", users_count);
         request.setAttribute("page", page);
         if(request.getSession().getAttribute("flush") != null) {

@@ -30,7 +30,7 @@ import javax.persistence.Table;
             query = "SELECT ur FROM UsersRestaurant AS ur WHERE ur.user = :user and ur.restaurant = :rest"
     ),
     @NamedQuery(
-            name = "getOpenRestaurants",
+            name = "getOpenUsersRestaurants",
             query = "SELECT ur FROM UsersRestaurant AS ur WHERE (ur.user = :user) "
                     //開店時間＜閉店時間の場合
                     + "AND (((ur.restaurant.open_time < ur.restaurant.close_time) "
@@ -47,7 +47,7 @@ import javax.persistence.Table;
                     + "ORDER BY ur.restaurant.close_time ASC"
     ),
     @NamedQuery(
-            name = "getOpenRestaurantsCount",
+            name = "getOpenUsersRestaurantsCount",
             query = "SELECT COUNT(ur) FROM UsersRestaurant AS ur WHERE (ur.user = :user) "
             + "AND (((ur.restaurant.open_time < ur.restaurant.close_time) "
             + "AND (ur.restaurant.closed_day NOT LIKE :today) "
@@ -58,7 +58,7 @@ import javax.persistence.Table;
             + "ORDER BY ur.restaurant.close_time ASC"
     ),
     @NamedQuery(
-            name = "getCloseRestaurants",
+            name = "getCloseUsersRestaurants",
             query = "SELECT ur FROM UsersRestaurant AS ur WHERE (ur.user = :user) "
                     //開店時間＜閉店時間の場合は
                     + "AND (((ur.restaurant.open_time < ur.restaurant.close_time) "

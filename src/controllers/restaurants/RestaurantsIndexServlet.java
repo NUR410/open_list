@@ -51,6 +51,7 @@ public class RestaurantsIndexServlet extends HttpServlet {
         em.close();
 
         request.setAttribute("restaurants", restaurants);
+        request.setAttribute("size", restaurants.size());
         request.setAttribute("restaurants_count", restaurants_count);
         request.setAttribute("page", page);
         if(request.getSession().getAttribute("flush") != null) {

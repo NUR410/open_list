@@ -43,26 +43,24 @@ public class LoginFilter implements Filter {
         if(!servlet_path.matches("/css.*")) {       // CSSフォルダ内は認証処理から除外する
             HttpSession session = ((HttpServletRequest)request).getSession();
 
-            // セッションスコープに保存された従業員（ログインユーザ）情報を取得
+            // セッションスコープに保存されたログインユーザ情報を取得
             User u = (User)session.getAttribute("login_user");
-
-            if(!servlet_path.equals("/login") && !servlet_path.equals("/users/create")) {        // ログイン画面以外について
-                // ログアウトしている状態であれば
+            // ログアウトしている状態であれば
+            if(u == null) {
+                // ログイン画面,ユーザー作成,,トップページ
+                //店舗一覧,店舗詳細,ユーザー一覧,ユーザー詳細以外について
                 // ログイン画面にリダイレクト
-                if(u == null) {
+                if(!servlet_path.equals("/login") && !servlet_path.equals("/users/create") && !servlet_path.equals("/index.html") && !servlet_path.equals("/restaurants/index")
+                && !servlet_path.equals("/restaurants/show")&& !servlet_path.equals("/users/index") && !servlet_path.equals("/users/show")) {
                     ((HttpServletResponse)response).sendRedirect(context_path + "/login");
                     return;
                 }
 
-//                // ユーザー管理の機能が閲覧できるようにする＊
-//                if(servlet_path.matches("/users.*")) {
-//                    ((HttpServletResponse)response).sendRedirect(context_path + "/");
-//                    return;
-//                }
-            } else {                                    // ログイン画面について
+             // ログインしている状態であれば
+            } else {
                 // ログインしているのにログイン画面を表示させようとした場合は
                 // システムのトップページにリダイレクト
-                if(u != null) {
+                if(u != null && servlet_path.equals("/login")) {
                     ((HttpServletResponse)response).sendRedirect(context_path + "/");
                     return;
                 }

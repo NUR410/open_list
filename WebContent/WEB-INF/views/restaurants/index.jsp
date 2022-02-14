@@ -25,7 +25,7 @@
         </table>
 
         <div id="pagination">
-            （全 ${restaurants_count} 件）<br />
+            （全${restaurants_count}件中 ${((page - 1) * 15) + 1}〜${((page - 1) * 15) + size} を表示中 ）<br />
             <c:forEach var="i" begin="1" end="${((restaurants_count - 1) / 15) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
@@ -37,7 +37,8 @@
                 </c:choose>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='/restaurants/new' />">新規登録</a></p>
-
+        <c:if test="${sessionScope.login_user != null}">
+           <p><a href="<c:url value='/restaurants/new' />">新規店舗の登録</a></p>
+        </c:if>
     </c:param>
 </c:import>

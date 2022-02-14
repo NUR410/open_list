@@ -13,23 +13,28 @@
             <div id="header">
                 <div id="header_menu">
                     <h1><a href="<c:url value='/' />">営業時間確認システム</a></h1>&nbsp;&nbsp;&nbsp;
-                    <c:if test="${sessionScope.login_user != null}">
-                        <a href="<c:url value='/users/index' />">ユーザー</a>&nbsp;
-                        <a href="<c:url value='/restaurants/index' />">店舗</a>&nbsp;
-                    </c:if>
+                    <a href="<c:url value='/users/index' />">ユーザー</a>&nbsp;
+                    <a href="<c:url value='/restaurants/index' />">店舗</a>&nbsp;
                 </div>
-                <c:if test="${sessionScope.login_user != null}">
-                    <div id="user_name">
-                        <c:out value="${sessionScope.login_user.name}" />&nbsp;さん&nbsp;&nbsp;&nbsp;
-                        <a href="<c:url value='/logout' />">ログアウト</a>
-                    </div>
-                </c:if>
+                <c:choose>
+                    <c:when test="${sessionScope.login_user != null}">
+                        <div id="user_name">
+                            <c:out value="${sessionScope.login_user.name}" />&nbsp;さん&nbsp;&nbsp;&nbsp;
+                            <a href="<c:url value='/logout' />">ログアウト</a>
+                        </div>
+                    </c:when>
+                    <c:otherwise>
+                        <div id="user_name">
+                            <a href="<c:url value='/login' />">ログイン　新規登録</a>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
             <div id="content">
                 ${param.content}
             </div>
             <div id="footer">
-                <!--  footer -->
+                <br />
             </div>
         </div>
     </body>

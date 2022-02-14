@@ -28,7 +28,7 @@
         </table>
 
         <div id="pagination">
-            （全 ${users_count} 件）<br />
+            （全${users_count}件中 ${((page - 1) * 15) + 1}〜${((page - 1) * 15) + size} を表示中 ）<br />
             <c:forEach var="i" begin="1" end="${((users_count - 1) / 15) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
