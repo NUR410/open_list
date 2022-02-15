@@ -12,7 +12,7 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>ログイン</h2>
+        <h3>ログイン</h3><br />
         <form method="POST" action="<c:url value='/login' />">
             <label for="name">ユーザー名</label><br />
             <input type="text" name="name" value="${name}" />
@@ -25,8 +25,8 @@
             <input type="hidden" name="_token" value="${_token}" />
             <button type="submit">ログイン</button>
         </form>
-                <br /><br />
-                <h2>ユーザー　新規登録</h2>
+                <br /><br /><br />
+                <h3>ユーザー　新規登録</h3><br />
         <form method="POST" action="<c:url value='/users/create' />">
             <c:import url="../users/_form.jsp" />
         </form>

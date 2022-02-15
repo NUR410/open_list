@@ -1,6 +1,8 @@
 package controllers.restaurants;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -43,6 +45,13 @@ public class RestaurantsEditServlet extends HttpServlet {
             request.setAttribute("restaurant", r);
             request.setAttribute("_token", request.getSession().getId());
             request.getSession().setAttribute("restaurant_id", r.getId());
+
+            String[] day_week = {"月","火","水","木","金","土","日","祝"};
+            List<Boolean> cd = new ArrayList<>();
+            for(String dw : day_week){
+                cd.add(r.getClosed_day().contains(dw));
+            }
+            request.setAttribute("cd", cd);
         }
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/restaurants/edit.jsp");

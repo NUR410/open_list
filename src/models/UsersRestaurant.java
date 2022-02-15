@@ -23,11 +23,15 @@ import javax.persistence.Table;
     ),
     @NamedQuery(
             name = "getUsersRestaurants",
-            query = "SELECT ur FROM UsersRestaurant AS ur WHERE ur.restaurant = :rest"
+            query = "SELECT ur FROM UsersRestaurant AS ur WHERE ur.user = :user and ur.restaurant = :rest"
     ),
     @NamedQuery(
             name = "getUsersRestaurantsCount",
             query = "SELECT COUNT(ur) FROM UsersRestaurant AS ur WHERE ur.user = :user and ur.restaurant = :rest"
+    ),
+    @NamedQuery(
+            name = "getRestsUsersRestaurants",
+            query = "SELECT ur FROM UsersRestaurant AS ur WHERE ur.restaurant = :rest"
     ),
     @NamedQuery(
             name = "getOpenUsersRestaurants",

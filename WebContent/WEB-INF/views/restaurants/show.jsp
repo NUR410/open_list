@@ -6,7 +6,7 @@
     <c:param name="content">
         <c:choose>
             <c:when test="${restaurant != null}">
-                <h2>店舗　詳細ページ</h2>
+                <h3>店舗　詳細ページ</h3>
                 <c:if test="${flush != null}">
                     <div id="flush_success">
                         <c:out value="${flush}"></c:out>

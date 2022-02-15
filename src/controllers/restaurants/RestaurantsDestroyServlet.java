@@ -39,7 +39,7 @@ public class RestaurantsDestroyServlet extends HttpServlet {
             // リクエストスコープから店舗のIDを取得して
             // 該当のIDの店舗１件のみをデータベースから取得
             Restaurant r = em.find(Restaurant.class, Integer.parseInt(request.getParameter("restaurant_id")));
-            List<UsersRestaurant> ur_list = em.createNamedQuery("getUsersRestaurants", UsersRestaurant.class)
+            List<UsersRestaurant> ur_list = em.createNamedQuery("getRestsUsersRestaurants", UsersRestaurant.class)
                     .setParameter("rest", r)
                     .getResultList();
 

@@ -42,10 +42,16 @@ public class RestaurantsUpdateServlet extends HttpServlet {
 
             r.setName(request.getParameter("name"));
 
-            String ot = request.getParameter("open_time").replace(":", "");
-            String ct = request.getParameter("close_time").replace(":", "");
-            int open_time = Integer.parseInt(ot);
-            int close_time = Integer.parseInt(ct);
+            int open_time = 0;
+            if(!request.getParameter("open_time").equals("")){
+                String ot = request.getParameter("open_time").replace(":", "");
+                open_time = Integer.parseInt(ot);
+            }
+            int close_time = 0;
+            if(!request.getParameter("close_time").equals("")){
+                String ct = request.getParameter("close_time").replace(":", "");
+                close_time = Integer.parseInt(ct);
+            }
             r.setClose_time(close_time);
             r.setOpen_time(open_time);
 
@@ -78,7 +84,7 @@ public class RestaurantsUpdateServlet extends HttpServlet {
 
                 request.getSession().removeAttribute("restaurant_id");
 
-                response.sendRedirect(request.getContextPath() + "/restaurants/index");
+                response.sendRedirect(request.getContextPath() + "/restaurants/show?id=" +r.getId());
             }
         }
     }

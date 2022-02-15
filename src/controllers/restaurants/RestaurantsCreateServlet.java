@@ -45,10 +45,16 @@ public class RestaurantsCreateServlet extends HttpServlet {
             r.setUser((User)request.getSession().getAttribute("login_user"));
             r.setName(request.getParameter("name"));
 
-            String ot = request.getParameter("open_time").replace(":", "");
-            String ct = request.getParameter("close_time").replace(":", "");
-            int open_time = Integer.parseInt(ot);
-            int close_time = Integer.parseInt(ct);
+            int open_time = 0;
+            if(!request.getParameter("open_time").equals("")){
+                String ot = request.getParameter("open_time").replace(":", "");
+                open_time = Integer.parseInt(ot);
+            }
+            int close_time = 0;
+            if(!request.getParameter("close_time").equals("")){
+                String ct = request.getParameter("close_time").replace(":", "");
+                close_time = Integer.parseInt(ct);
+            }
             r.setClose_time(close_time);
             r.setOpen_time(open_time);
 

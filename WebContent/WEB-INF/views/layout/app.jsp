@@ -19,7 +19,7 @@
                 <c:choose>
                     <c:when test="${sessionScope.login_user != null}">
                         <div id="user_name">
-                            <a href="<c:url value='/users/show?id=${sessionScope.login_user.name}' />"><c:out value="${sessionScope.login_user.name}" />&nbsp;さん</a>&nbsp;&nbsp;&nbsp;
+                            <a href="<c:url value='/users/show?id=${sessionScope.login_user.id}' />"><c:out value="${sessionScope.login_user.name}" />&nbsp;さん</a>&nbsp;&nbsp;&nbsp;
                             <a href="<c:url value='/logout' />">ログアウト</a>
                         </div>
                     </c:when>

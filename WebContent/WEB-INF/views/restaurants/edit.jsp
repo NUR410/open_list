@@ -4,7 +4,7 @@
     <c:param name="content">
         <c:choose>
             <c:when test="${restaurant != null}">
-                <h2>店舗　編集ページ</h2>
+                <h3>店舗　編集ページ</h3>
                 <form method="POST" action="<c:url value='/restaurants/update' />">
                     <c:import url="_form.jsp" />
                 </form>
