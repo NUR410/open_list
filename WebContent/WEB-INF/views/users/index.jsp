@@ -7,13 +7,13 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>ユーザー　一覧</h2>
+        <h3>ユーザー　一覧</h3>
         <table id="user_list">
             <tbody>
                 <tr>
-                    <th>ID</th>
-                    <th>氏名</th>
-                    <th>操作</th>
+                    <th class="user_id">ID</th>
+                    <th class="user_name">ユーザー名</th>
+                    <th class="user_action">操作</th>
                 </tr>
                 <c:forEach var="user" items="${users}" varStatus="status">
                     <c:if test="${user.delete_flag == 0}">

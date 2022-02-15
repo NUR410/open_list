@@ -8,16 +8,27 @@
                 <c:out value="${flush}"></c:out>
             </div>
         </c:if>
-        <h2>全店舗　一覧</h2>
+        <h3>全店舗　一覧</h3>
         <table id="restaurant_list">
             <tbody>
                 <tr>
                     <th class="restaurant_name">店名</th>
+                    <th class="restaurant_name">投稿者</th>
                     <th class="restaurant_action">操作</th>
                 </tr>
                 <c:forEach var="restaurant" items="${restaurants}" varStatus="status">
                     <tr class="row${status.count % 2}">
                         <td class="restaurant_name"><c:out value="${restaurant.name}" /></td>
+                        <td class="restaurant_name">
+                            <c:choose>
+                                <c:when test="${restaurant.user.delete_flag == 0}">
+                                    <a href="<c:url value='/users/show?id=${restaurant.user.id}' />"><c:out value="${restaurant.user.name}" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                    (削除済)
+                                </c:otherwise>
+                            </c:choose>
+                        </td>
                         <td class="restaurant_action"><a href="<c:url value='/restaurants/show?id=${restaurant.id}' />">詳細を見る</a></td>
                     </tr>
                 </c:forEach>

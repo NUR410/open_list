@@ -9,7 +9,7 @@
 
     </div>
 </c:if>
-<label for="name">氏名</label><br />
+<label for="name">ユーザー名</label><br />
 <input type="text" name="name" value="${employee.name}" />
 <br /><br />
 
@@ -17,7 +17,6 @@
 <input type="password" name="password" />
 <br /><br />
 
-<br /><br />
 
 <input type="hidden" name="_token" value="${_token}" />
 <button type="submit">投稿</button>

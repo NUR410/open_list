@@ -13,19 +13,20 @@
             <div id="header">
                 <div id="header_menu">
                     <h1><a href="<c:url value='/' />">営業時間確認システム</a></h1>&nbsp;&nbsp;&nbsp;
-                    <a href="<c:url value='/users/index' />">ユーザー</a>&nbsp;
+                    <a href="<c:url value='/users/index' />">ユーザー</a>&nbsp;&nbsp;
                     <a href="<c:url value='/restaurants/index' />">店舗</a>&nbsp;
                 </div>
                 <c:choose>
                     <c:when test="${sessionScope.login_user != null}">
                         <div id="user_name">
-                            <c:out value="${sessionScope.login_user.name}" />&nbsp;さん&nbsp;&nbsp;&nbsp;
+                            <a href="<c:url value='/users/show?id=${sessionScope.login_user.name}' />"><c:out value="${sessionScope.login_user.name}" />&nbsp;さん</a>&nbsp;&nbsp;&nbsp;
                             <a href="<c:url value='/logout' />">ログアウト</a>
                         </div>
                     </c:when>
                     <c:otherwise>
                         <div id="user_name">
-                            <a href="<c:url value='/login' />">ログイン　新規登録</a>
+                            <a href="<c:url value='/login' />">ログイン</a>&nbsp;&nbsp;
+                            <a href="<c:url value='/login' />">新規登録</a>
                         </div>
                     </c:otherwise>
                 </c:choose>

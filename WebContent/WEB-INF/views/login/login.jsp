@@ -14,7 +14,7 @@
         </c:if>
         <h2>ログイン</h2>
         <form method="POST" action="<c:url value='/login' />">
-            <label for="name">名前</label><br />
+            <label for="name">ユーザー名</label><br />
             <input type="text" name="name" value="${name}" />
             <br /><br />
 
@@ -25,9 +25,8 @@
             <input type="hidden" name="_token" value="${_token}" />
             <button type="submit">ログイン</button>
         </form>
-
+                <br /><br />
                 <h2>ユーザー　新規登録</h2>
-
         <form method="POST" action="<c:url value='/users/create' />">
             <c:import url="../users/_form.jsp" />
         </form>

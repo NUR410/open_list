@@ -7,14 +7,14 @@
             <c:when test="${user != null && user.delete_flag == 0}">
                 <h3>${user.name} さんのユーザー情報　詳細ページ</h3>
 
-                <table>
+                <table id="user_list">
                     <tbody>
                         <tr>
                             <th>id</th>
                             <td><c:out value="${user.id}" /></td>
                         </tr>
                         <tr>
-                            <th>氏名</th>
+                            <th>ユーザー名</th>
                             <td><c:out value="${user.name}" /></td>
                         </tr>
                     </tbody>

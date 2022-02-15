@@ -2,6 +2,7 @@
 
 body {
     coler: #333333;
+    min-width: 650px;
     font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
 }
 
@@ -44,6 +45,7 @@ a {
 
 table, tr, th, td {
     border: 1px solid #cccccc;
+    height: 26px;
 }
 
 table {
@@ -52,13 +54,15 @@ table {
 }
 
 th {
+    font-weight: bold;
     width: 26%;
-    padding: 10px 2%;
+    padding: 10px;
+    text-align: left;
 }
 
 td {
     width: 66%;
-    padding: 10px 2%;
+    padding: 10px;
 }
 
 button {
@@ -87,13 +91,13 @@ button {
 }
 
 table#user_list th {
-    width: 30%;
-    padding: 10px 2%;
+    /* width: 30%;
+    padding: 10px 2%; */
 }
 
 table#user_list td {
-    width: 29%;
-    padding: 10px 2%;
+    /* width: 29%;
+    padding: 10px 2%; */
 }
 
 tr.row1 {
@@ -131,22 +135,29 @@ h1 a {
 }
 
 table#restaurant_list th {
-    font-weight: bold;
-    padding: 10px 2%;
+    /* padding: 10px 2%;
+    width: 150px; */
 }
 
 table#restaurant_list .restaurant_name {
-    width: 150px;
-    padding: 10px 2%;
+    width:  calc(100% - 500px);
+    text-align: left;
 }
 
 table#restaurant_list .restaurant_time {
-    width: 48px;
+    width: 80px;
+    text-align: center;
 }
 
 table#restaurant_list .restaurant_day {
-    width: 96px;
+    width: 160px;
+    text-align: center;
 }
+
+table#user_list th {
+    padding: 10px 2%;
+}
+
 pre {
     font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
 }

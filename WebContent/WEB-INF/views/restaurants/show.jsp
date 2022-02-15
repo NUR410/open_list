@@ -15,7 +15,7 @@
                 <table>
                     <tbody>
                         <tr>
-                            <th>名</th>
+                            <th>店名</th>
                             <td><c:out value="${restaurant.name}" /></td>
                         </tr>
                         <tr>
@@ -30,6 +30,19 @@
                             <th>休業日</th>
                             <td>
                                 <c:out value="${restaurant.closed_day}" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>投稿者</th>
+                            <td>
+                                <c:choose>
+                                <c:when test="${restaurant.user.delete_flag == 0}">
+                                    <a href="<c:url value='/users/show?id=${restaurant.user.id}' />"><c:out value="${restaurant.user.name}" /></a>
+                                </c:when>
+                                <c:otherwise>
+                                    (削除済)
+                                </c:otherwise>
+                            </c:choose>
                             </td>
                         </tr>
                         <tr>
